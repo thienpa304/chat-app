@@ -1,5 +1,6 @@
 "use client";
 import { Icons } from "@/components/icons";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 const menu = [
@@ -55,6 +56,12 @@ const MenuBar = () => {
               />
             </Link>
           ))}
+          <div
+            onClick={() => signOut()}
+            className="cursor-pointer w-full h-10 flex justify-center items-center"
+          >
+            <Icons.signOut className="w-6 h-6 relative" />
+          </div>
         </div>
       </div>
       <div className="w-6 h-6 relative" />

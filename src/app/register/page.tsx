@@ -119,7 +119,7 @@ export default function RegisterPage() {
               href="/login"
               className="text-center text-gray-500 text-xs font-normal"
             >
-              New here? login
+              Login
             </a>
             <div className="text-center text-gray-500 text-xs font-normal">
               Forgot your password?
