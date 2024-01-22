@@ -1,4 +1,5 @@
 import "./globals.css";
+import MenuBar from "./menu-bar";
 import { NextAuthProvider } from "./providers";
 
 export const metadata = {
@@ -14,7 +15,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <NextAuthProvider>{children}</NextAuthProvider>
+        <NextAuthProvider>
+          <div className="flex">
+            <MenuBar />
+            {children}
+          </div>
+        </NextAuthProvider>
       </body>
     </html>
   );
