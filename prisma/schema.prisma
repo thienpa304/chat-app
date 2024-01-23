@@ -11,16 +11,17 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  name          String
-  email         String?   @unique
-  password      String?
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  accounts      Account[]
-  sessions      Session[]
+  id             String    @id @default(uuid())
+  name           String
+  email          String?   @unique
+  password       String?
+  emailVerified  DateTime? @map("email_verified")
+  image          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  accounts       Account[]
+  sessions       Session[]
+  assignedIssues Issue[]
 
   @@map("users")
 }
@@ -67,4 +68,44 @@ model VerificationRequest {
   updatedAt  DateTime @updatedAt
 
   @@unique([identifier, token])
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  issues      Issue[]
+}
+
+model Issue {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String?
+  status      String    @default("open")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  projectId   Int
+  project     Project   @relation(fields: [projectId], references: [id])
+  assignees   User[]
+  comments    Comment[]
+  labels      Label[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  issueId   Int
+  issue     Issue    @relation(fields: [issueId], references: [id])
+}
+
+model Label {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  color       String
+  issues      Issue[]
 }
